@@ -1,11 +1,11 @@
 export default async function handler(req, res) {
-    if (req.method !== 'POST') return res.status(405).end();
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
     try {
         const { paymentId } = req.body;
-        const PI_API_KEY = process.env.PI_API_KEY; // هذا السطر سيقرأ المفتاح الذي أضفته في الصورة
+        const PI_API_KEY = process.env.PI_API_KEY; // سيقرأ المفتاح الذي أضفته في الصورة
 
-        // إرسال طلب الموافقة الرسمي لشبكة باي
+        // استدعاء API الموافقة الرسمي الذي ذكره صديقك
         const response = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/approve`, {
             method: 'POST',
             headers: {
@@ -15,9 +15,11 @@ export default async function handler(req, res) {
         });
 
         if (response.ok) {
+            console.log("تمت الموافقة الرسمية بنجاح");
             return res.status(200).json({ status: 'approved' });
         } else {
-            return res.status(500).json({ error: 'Approval failed' });
+            const errorData = await response.json();
+            return res.status(500).json({ error: 'Pi Network rejected approval', details: errorData });
         }
     } catch (err) {
         return res.status(500).json({ error: 'Server error' });
