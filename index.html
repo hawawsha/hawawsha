@@ -1,35 +1,39 @@
-<script>
-    const Pi = window.Pi;
-    Pi.init({ version: "2.0", sandbox: true });
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Souq Pi</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+</head>
+<body>
+    <button id="pay-button" style="padding:20px; background:#f39c12; color:white;">ادفع 1 Pi لإتمام الخطوة 10</button>
 
-    async function handlePayment() {
-        try {
-            // المصادقة لفتح الاتصال
-            await Pi.authenticate(['payments'], (paymentId) => {});
-            
-            // طلب الدفع المباشر
-            const payment = await Pi.createPayment({
-                amount: 1,
-                memo: "Test Step 10",
-                metadata: { productId: "item-10" }
-            }, {
-                onReadyForServerApproval: (paymentId) => {
-                    return fetch('/api/index', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ paymentId })
-                    });
-                },
-                onReadyForServerCompletion: (paymentId, txid) => {
-                    alert("تم النجاح! كود العملية: " + txid);
-                },
-                onCancel: (paymentId) => { console.log("Cancelled"); },
-                onError: (error) => { alert("خطأ: " + error.message); }
-            });
-        } catch (err) {
-            alert("حدث خطأ، تأكد من تحديث الصفحة");
+    <script>
+        const Pi = window.Pi;
+        Pi.init({ version: "2.0", sandbox: true }); // اتركها true للخطوة 10
+
+        document.getElementById('pay-button').onclick = async function() {
+            try {
+                await Pi.authenticate(['payments']);
+                const payment = await Pi.createPayment({
+                    amount: 1,
+                    memo: "Test Step 10",
+                    metadata: { productId: "10" }
+                }, {
+                    onReadyForServerApproval: (paymentId) => {
+                        return fetch('/api/index', { // تأكد من مسار ملف الـ api عندك
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ paymentId })
+                        });
+                    },
+                    onReadyForServerCompletion: (paymentId, txid) => {
+                        alert("نجحت الخطوة 10! رقم العملية: " + txid);
+                    },
+                    onCancel: (paymentId) => {},
+                    onError: (error) => { alert("خطأ: " + error.message); }
+                });
+            } catch (e) { alert("اعد المحاولة"); }
         }
-    }
-
-    document.getElementById('pay-button').onclick = handlePayment;
-</script>
+    </script>
+</body>
+</html>
