@@ -4,70 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>السيرة الذاتية - سوق باي</title>
-    <style>
-        /* إعدادات السيرة الذاتية باللغة العربية */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        header { background: #2c3e50; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        nav a { color: white; text-decoration: none; margin: 0 10px; }
-        .cv-container { background: white; width: 80%; margin: 20px auto; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .section-title { border-bottom: 2px solid #2c3e50; padding-bottom: 5px; color: #2c3e50; margin-top: 20px; }
-        .lang-btn { background: #e67e22; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <nav>
-        <a href="index.html" id="nav-home">الرئيسية</a>
-        <a href="projects.html" id="nav-projects">المشاريع</a>
-        <a href="blog.html" id="nav-blog">المدونة</a>
-    </nav>
-    <button class="lang-btn" id="lang-btn" onclick="toggleCVLang()">English</button>
-</header>
+    <header>
+        <nav>
+            <div class="logo">سوق باي</div>
+            <ul id="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="projects.html">المشاريع</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="cv.html" class="active">السيرة الذاتية</a></li>
+            </ul>
+            <button id="lang-switch">English</button>
+        </nav>
+    </header>
 
-<div class="cv-container">
-    <h1 id="cv-main-title">السيرة الذاتية</h1>
-    
-    <div class="section">
-        <h2 class="section-title" id="info-title">المعلومات الشخصية</h2>
-        <p id="info-text">الاسم: [ضع اسمك هنا]<br>التخصص: مطور تطبيقات / مشروع souq-pi-app</p>
-    </div>
+    <main>
+        <section class="content">
+            <h1>السيرة الذاتية</h1>
+            <p>هنا يمكنك إضافة معلوماتك الشخصية، خبراتك، ومهاراتك في تطوير المشاريع.</p>
+        </section>
+    </main>
 
-    <div class="section">
-        <h2 class="section-title" id="exp-title">الخبرة العملية</h2>
-        <p id="exp-text">تفاصيل الخبرات والمشاريع التي عملت عليها.</p>
-    </div>
-</div>
+    <script>
+        const langSwitch = document.getElementById('lang-switch');
+        const translations = {
+            ar: {
+                logo: "سوق باي",
+                home: "الرئيسية",
+                projects: "المشاريع",
+                blog: "المدونة",
+                cv: "السيرة الذاتية",
+                title: "السيرة الذاتية",
+                desc: "هنا يمكنك إضافة معلوماتك الشخصية، خبراتك، ومهاراتك في تطوير المشاريع."
+            },
+            en: {
+                logo: "Souq Pi",
+                home: "Home",
+                projects: "Projects",
+                blog: "Blog",
+                cv: "CV",
+                title: "Curriculum Vitae",
+                desc: "Here you can add your personal information, experiences, and skills in project development."
+            }
+        };
 
-<script>
-    function toggleCVLang() {
-        const html = document.documentElement;
-        const btn = document.getElementById('lang-btn');
-        const mainTitle = document.getElementById('cv-main-title');
-        const home = document.getElementById('nav-home');
-        const projects = document.getElementById('nav-projects');
-        const blog = document.getElementById('nav-blog');
+        langSwitch.addEventListener('click', () => {
+            const isAr = document.documentElement.lang === 'ar';
+            const nextLang = isAr ? 'en' : 'ar';
+            const dir = isAr ? 'ltr' : 'rtl';
 
-        if (html.dir === "rtl") {
-            html.dir = "ltr";
-            html.lang = "en";
-            btn.innerText = "العربية";
-            mainTitle.innerText = "Curriculum Vitae";
-            home.innerText = "Home";
-            projects.innerText = "Projects";
-            blog.innerText = "Blog";
-            // يمكن إضافة باقي الترجمات هنا
-        } else {
-            html.dir = "rtl";
-            html.lang = "ar";
-            btn.innerText = "English";
-            mainTitle.innerText = "السيرة الذاتية";
-            home.innerText = "الرئيسية";
-            projects.innerText = "المشاريع";
-            blog.innerText = "المدونة";
-        }
-    }
-</script>
+            document.documentElement.lang = nextLang;
+            document.documentElement.dir = dir;
+            langSwitch.textContent = isAr ? 'العربية' : 'English';
 
+            const links = document.querySelectorAll('#nav-links a');
+            links[0].textContent = translations[nextLang].home;
+            links[1].textContent = translations[nextLang].projects;
+            links[2].textContent = translations[nextLang].blog;
+            links[3].textContent = translations[nextLang].cv;
+            document.querySelector('.logo').textContent = translations[nextLang].logo;
+            document.querySelector('h1').textContent = translations[nextLang].title;
+            document.querySelector('p').textContent = translations[nextLang].desc;
+        });
+    </script>
 </body>
 </html>
