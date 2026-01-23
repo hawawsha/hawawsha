@@ -1,39 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>Souq Pi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوق باي - الخطوة 10</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #ffffff; }
+        .btn-pay { 
+            background-color: #f39c12; 
+            color: white; 
+            padding: 20px 40px; 
+            border: 2px solid #2c3e50; 
+            border-radius: 10px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+    </style>
 </head>
 <body>
-    <button id="pay-button" style="padding:20px; background:#f39c12; color:white;">ادفع 1 Pi لإتمام الخطوة 10</button>
+
+    <button id="pay-button" class="btn-pay">لإتمام الخطوة 10 ادفع 1 Pi</button>
 
     <script>
         const Pi = window.Pi;
-        Pi.init({ version: "2.0", sandbox: true }); // اتركها true للخطوة 10
+        
+        // التأكد من أنك داخل Pi Browser (نصيحة صديقك رقم 4)
+        alert(window.Pi ? "Pi Browser OK" : "تحذير: أنت لست داخل Pi Browser");
+
+        // تهيئة التطبيق في وضع الإنتاج (sandbox: false) لإتمام الخطوة 10
+        Pi.init({ version: "2.0", sandbox: false });
 
         document.getElementById('pay-button').onclick = async function() {
             try {
-                await Pi.authenticate(['payments']);
+                // 1. المصادقة
+                const scopes = ['payments'];
+                await Pi.authenticate(scopes, (paymentId) => {});
+
+                // 2. طلب الدفع
                 const payment = await Pi.createPayment({
                     amount: 1,
-                    memo: "Test Step 10",
-                    metadata: { productId: "10" }
+                    memo: "إتمام الخطوة العاشرة بنجاح",
+                    metadata: { productId: "item-final-10" }
                 }, {
                     onReadyForServerApproval: (paymentId) => {
-                        return fetch('/api/index', { // تأكد من مسار ملف الـ api عندك
+                        // إرسال الطلب للخلفية (Backend) للموافقة
+                        return fetch('/api/index', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ paymentId })
                         });
                     },
                     onReadyForServerCompletion: (paymentId, txid) => {
-                        alert("نجحت الخطوة 10! رقم العملية: " + txid);
+                        alert("مبروك! اكتملت الخطوة 10 بنجاح. رقم العملية: " + txid);
                     },
-                    onCancel: (paymentId) => {},
+                    onCancel: (paymentId) => { console.log("تم الإلغاء"); },
                     onError: (error) => { alert("خطأ: " + error.message); }
                 });
-            } catch (e) { alert("اعد المحاولة"); }
-        }
+            } catch (err) {
+                alert("تنبيه: " + err.message);
+            }
+        };
     </script>
 </body>
 </html>
