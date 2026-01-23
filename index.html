@@ -1,67 +1,21 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوق باي - الخطوة 10</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #ffffff; }
-        .btn-pay { 
-            background-color: #f39c12; 
-            color: white; 
-            padding: 20px 40px; 
-            border: 2px solid #2c3e50; 
-            border-radius: 10px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
-        }
-    </style>
-</head>
-<body>
+Pi.init({ version: "2.0", sandbox: false }); // الإنتاج الحقيقي
 
-    <button id="pay-button" class="btn-pay">لإتمام الخطوة 10 ادفع 1 Pi</button>
-
-    <script>
-        const Pi = window.Pi;
-        
-        // التأكد من أنك داخل Pi Browser (نصيحة صديقك رقم 4)
-        alert(window.Pi ? "Pi Browser OK" : "تحذير: أنت لست داخل Pi Browser");
-
-        // تهيئة التطبيق في وضع الإنتاج (sandbox: false) لإتمام الخطوة 10
-        Pi.init({ version: "2.0", sandbox: false });
-
-        document.getElementById('pay-button').onclick = async function() {
-            try {
-                // 1. المصادقة
-                const scopes = ['payments'];
-                await Pi.authenticate(scopes, (paymentId) => {});
-
-                // 2. طلب الدفع
-                const payment = await Pi.createPayment({
-                    amount: 1,
-                    memo: "إتمام الخطوة العاشرة بنجاح",
-                    metadata: { productId: "item-final-10" }
-                }, {
-                    onReadyForServerApproval: (paymentId) => {
-                        // إرسال الطلب للخلفية (Backend) للموافقة
-                        return fetch('/api/index', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ paymentId })
-                        });
-                    },
-                    onReadyForServerCompletion: (paymentId, txid) => {
-                        alert("مبروك! اكتملت الخطوة 10 بنجاح. رقم العملية: " + txid);
-                    },
-                    onCancel: (paymentId) => { console.log("تم الإلغاء"); },
-                    onError: (error) => { alert("خطأ: " + error.message); }
-                });
-            } catch (err) {
-                alert("تنبيه: " + err.message);
-            }
-        };
-    </script>
-</body>
-</html>
+const payment = await Pi.createPayment({
+    amount: 1,
+    memo: "إتمام الخطوة 10",
+    metadata: { productId: "step-10" }
+}, {
+    onReadyForServerApproval: (paymentId) => {
+        // هذا هو السطر الذي يمنع الـ Timeout
+        return fetch('/api/index', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentId })
+        });
+    },
+    onReadyForServerCompletion: (paymentId, txid) => {
+        alert("مبروك! اكتملت الخطوة 10 بنجاح");
+    },
+    onCancel: (paymentId) => { console.log("إلغاء"); },
+    onError: (error) => { alert("خطأ: " + error.message); }
+});
