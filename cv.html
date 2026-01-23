@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السيرة الذاتية - سوق باي</title>
+    <style>
+        /* إعدادات السيرة الذاتية باللغة العربية */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background: #2c3e50; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; text-decoration: none; margin: 0 10px; }
+        .cv-container { background: white; width: 80%; margin: 20px auto; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .section-title { border-bottom: 2px solid #2c3e50; padding-bottom: 5px; color: #2c3e50; margin-top: 20px; }
+        .lang-btn { background: #e67e22; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html" id="nav-home">الرئيسية</a>
+        <a href="projects.html" id="nav-projects">المشاريع</a>
+        <a href="blog.html" id="nav-blog">المدونة</a>
+    </nav>
+    <button class="lang-btn" id="lang-btn" onclick="toggleCVLang()">English</button>
+</header>
+
+<div class="cv-container">
+    <h1 id="cv-main-title">السيرة الذاتية</h1>
+    
+    <div class="section">
+        <h2 class="section-title" id="info-title">المعلومات الشخصية</h2>
+        <p id="info-text">الاسم: [ضع اسمك هنا]<br>التخصص: مطور تطبيقات / مشروع souq-pi-app</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title" id="exp-title">الخبرة العملية</h2>
+        <p id="exp-text">تفاصيل الخبرات والمشاريع التي عملت عليها.</p>
+    </div>
+</div>
+
+<script>
+    function toggleCVLang() {
+        const html = document.documentElement;
+        const btn = document.getElementById('lang-btn');
+        const mainTitle = document.getElementById('cv-main-title');
+        const home = document.getElementById('nav-home');
+        const projects = document.getElementById('nav-projects');
+        const blog = document.getElementById('nav-blog');
+
+        if (html.dir === "rtl") {
+            html.dir = "ltr";
+            html.lang = "en";
+            btn.innerText = "العربية";
+            mainTitle.innerText = "Curriculum Vitae";
+            home.innerText = "Home";
+            projects.innerText = "Projects";
+            blog.innerText = "Blog";
+            // يمكن إضافة باقي الترجمات هنا
+        } else {
+            html.dir = "rtl";
+            html.lang = "ar";
+            btn.innerText = "English";
+            mainTitle.innerText = "السيرة الذاتية";
+            home.innerText = "الرئيسية";
+            projects.innerText = "المشاريع";
+            blog.innerText = "المدونة";
+        }
+    }
+</script>
+
+</body>
+</html>
