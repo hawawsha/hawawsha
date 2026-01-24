@@ -6,32 +6,44 @@
     <title>سوق باي | Souq Pi</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 100px; background-color: #f4f4f4; }
-        .btn-pay { background-color: #f39c12; color: white; padding: 25px 50px; border: none; border-radius: 15px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .btn-pay:active { transform: scale(0.98); }
+        body { font-family: sans-serif; text-align: center; padding-top: 100px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 400px; margin: auto; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .btn-pay { background-color: #f39c12; color: white; padding: 20px 40px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
+        .btn-pay:hover { background-color: #e67e22; }
+        .status { margin-top: 20px; font-size: 14px; color: #666; }
     </style>
 </head>
 <body>
 
-    <button id="pay-button" class="btn-pay">لإتمام الخطوة 10 ادفع 1 Pi</button>
+    <div class="container">
+        <h2>تطبيق Souq Pi</h2>
+        <p>اضغط للبدء في توثيق الخطوة 10</p>
+        <button id="pay-button" class="btn-pay">دفع 1 Pi الآن</button>
+        <div id="log-status" class="status">جاهز للاتصال بشبكة Pi...</div>
+    </div>
 
     <script>
         const Pi = window.Pi;
-        Pi.init({ version: "2.0", sandbox: false }); // وضع الإنتاج الحقيقي
+        Pi.init({ version: "2.0", sandbox: false });
+
+        const logStatus = document.getElementById('log-status');
 
         document.getElementById('pay-button').onclick = async function() {
             try {
-                // طلب تسجيل الدخول والموافقة على الدفع
-                const auth = await Pi.authenticate(['payments'], (paymentId) => {});
-                
+                logStatus.innerText = "جاري التحقق من الحساب...";
+                const auth = await Pi.authenticate(['payments'], (paymentId) => {
+                    console.log("Payment ID from Auth:", paymentId);
+                });
+
+                logStatus.innerText = "جاري إنشاء طلب الدفع...";
                 const payment = await Pi.createPayment({
                     amount: 1,
-                    memo: "تفعيل الخطوة 10 - Souq Pi",
+                    memo: "توثيق الخطوة 10 - سوق باي",
                     metadata: { productId: "step-10" }
                 }, {
                     onReadyForServerApproval: (paymentId) => {
-                        console.log("إرسال طلب الموافقة إلى السيرفر (Endpoint Hit)...");
-                        // استدعاء ملف السيرفر api/index.js
+                        logStatus.innerText = "إرسال الموافقة للسيرفر...";
+                        // هذا هو السطر الحاسم الذي يرسل البيانات للـ Logs السوداء
                         return fetch('/api/index', { 
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -39,13 +51,20 @@
                         }).then(res => res.json());
                     },
                     onReadyForServerCompletion: (paymentId, txid) => {
-                        alert("مبروك! تم تأكيد العملية واكتملت الخطوة 10");
+                        logStatus.innerText = "تمت العملية بنجاح!";
+                        alert("مبروك! اكتملت الخطوة 10 بنجاح.");
                     },
-                    onCancel: (paymentId) => { console.log("تم إلغاء الدفع"); },
-                    onError: (error) => { alert("خطأ في العملية: " + error.message); }
+                    onCancel: (paymentId) => {
+                        logStatus.innerText = "تم إلغاء العملية.";
+                    },
+                    onError: (error) => {
+                        logStatus.innerText = "خطأ: " + error.message;
+                        alert("حدث خطأ: " + error.message);
+                    }
                 });
             } catch (err) {
-                alert("خطأ تقني: " + err.message);
+                logStatus.innerText = "خطأ تقني: " + err.message;
+                alert("خطأ: " + err.message);
             }
         };
     </script>
