@@ -47,30 +47,54 @@
               body: JSON.stringify({ paymentId })
             });
           },
-          onReadyForServerCompletion: async (paymentId, txid) => {
-            statusDiv.innerText = "اكتمل الدفع! جاري التوثيق النهائي...";
-            await fetch('/api/pay-handler', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ paymentId, txid })
+                          onReadyForServerApproval: async (paymentId) => {
+                    statusDiv.innerText = "...جاري تأكيد الدفع من الخادم";
+                    try {
+                        const response = await fetch('/api/approve', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ paymentId })
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            statusDiv.innerText = "تمت الموافقة من الخادم، بانتظار إتمام المعاملة...";
+                        } else {
+                            statusDiv.innerText = "فشل الخادم في الموافقة: " + (result.error || "خطأ غير معروف");
+                        }
+                    } catch (error) {
+                        statusDiv.innerText = "خطأ في الاتصال بالخادم: " + error.message;
+                    }
+                },
+                onReadyForServerCompletion: async (paymentId, txid) => {
+                    statusDiv.innerText = "...جاري إرسال رقم المعاملة للخادم";
+                    try {
+                        await fetch('/api/complete', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ paymentId, txid })
+                        });
+                        statusDiv.innerText = "✅ مبروك! تم تفعيل الخطوة 10 بنجاح";
+                        setTimeout(() => { location.reload(); }, 3000);
+                    } catch (error) {
+                        statusDiv.innerText = "خطأ في الإتمام النهائي: " + error.message;
+                    }
+                },
+                onCancel: (paymentId) => {
+                    statusDiv.innerText = "تم إلغاء عملية الدفع.";
+                    payBtn.disabled = false;
+                },
+                onError: (error, payment) => {
+                    statusDiv.innerText = "حدث خطأ أثناء الدفع: " + error.message;
+                    payBtn.disabled = false;
+                }
             });
-          },
-          onCancel: (paymentId) => {
-            statusDiv.innerText = "تم إلغاء العملية.";
-            payBtn.disabled = false;
-          },
-          onError: (error, payment) => {
+        } catch (error) {
             statusDiv.innerText = "خطأ: " + error.message;
             payBtn.disabled = false;
-          }
-        });
-
-        statusDiv.innerText = "تم التفعيل بنجاح! مبروك.";
-      } catch (err) {
-        statusDiv.innerText = "حدث خطأ غير متوقع.";
-        payBtn.disabled = false;
-      }
+        }
     });
+</script>
+
   </script>
 </body>
 </html>
