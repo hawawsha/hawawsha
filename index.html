@@ -1,32 +1,148 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>توثيق التطبيق - الخطوة 10</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f4f9; }
-        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
-        button { background-color: #8a2be2; color: white; border: none; padding: 12px 24px; font-size: 1rem; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        button:disabled { background-color: #ccc; cursor: not-allowed; }
-        #status { margin-top: 1rem; color: #555; font-size: 0.9rem; }
-    </style>
-</head>
-<body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>توثيق التطبيق – الخطوة 10</title>
 
-<div class="card">
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #8a2be2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    #status {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
     <h2>توثيق التطبيق – الخطوة 10</h2>
-    <button id="payBtn">تفعيل الآن (Pi 1)</button>
-    <div id="status">جاهز للبدء...</div>
-</div>
+    <button id="payBtn">تفعيل الآن (1 Pi)</button>
+    <div id="status">جاهز...</div>
+  </div>
 
 <script>
-    const Pi = window.Pi;
-    // التأكد من وضع sandbox: false لأنك في Mainnet
-    Pi.init({ version: "2.0", sandbox: false });
+  const Pi = window.Pi;
 
-    const payBtn = document.getElementById('payBtn');
-    const statusDiv = document.getElementById('status');
+  // Mainnet فقط
+  Pi.init({
+    version: "2.0",
+    sandbox: false
+  });
 
-    // هذه الدالة تتعامل مع أي دفع مع
+  const payBtn = document.getElementById("payBtn");
+  const statusDiv = document.getElementById("status");
+
+  function setStatus(text) {
+    statusDiv.innerText = text;
+  }
+
+  payBtn.addEventListener("click", async () => {
+    payBtn.disabled = true;
+    setStatus("جاري المصادقة...");
+
+    try {
+      await Pi.authenticate(
+        ["payments"],
+        () => {}
+      );
+
+      setStatus("جاري إنشاء الدفع...");
+
+      await Pi.createPayment(
+        {
+          amount: 1,
+          memo: "Step 10 App Verification",
+          metadata: { step: 10 }
+        },
+        {
+          // 1️⃣ عند جاهزية الموافقة
+          onReadyForServerApproval: async (paymentId) => {
+            setStatus("إرسال الموافقة للسيرفر...");
+
+            const res = await fetch("/api/approve", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId })
+            });
+
+            if (!res.ok) {
+              throw new Error("فشل approve");
+            }
+          },
+
+          // 2️⃣ عند جاهزية الإتمام
+          onReadyForServerCompletion: async (paymentId, txid) => {
+            setStatus("إتمام الدفع...");
+
+            const res = await fetch("/api/complete", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId, txid })
+            });
+
+            if (!res.ok) {
+              throw new Error("فشل complete");
+            }
+
+            setStatus("✅ تم التفعيل بنجاح");
+          },
+
+          // 3️⃣ إلغاء
+          onCancel: () => {
+            setStatus("تم إلغاء العملية");
+            payBtn.disabled = false;
+          },
+
+          // 4️⃣ خطأ
+          onError: (err) => {
+            console.error(err);
+            setStatus("❌ حدث خطأ");
+            payBtn.disabled = false;
+          }
+        }
+      );
+
+    } catch (err) {
+      console.error(err);
+      setStatus("❌ فشل التنفيذ");
+      payBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
