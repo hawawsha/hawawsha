@@ -1,39 +1,30 @@
+// api/complete.js
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { paymentId } = req.body;
-  if (!paymentId) {
-    return res.status(400).json({ error: "Missing paymentId" });
-  }
+  const { paymentId, txid } = req.body;
+  const PI_API_KEY = process.env.PI_API_KEY;
 
   try {
-    // 1️⃣ الموافقة (Approve)
-    await fetch(`https://api.minepi.com/v2/payments/${paymentId}/approve`, {
-      method: "POST",
+    // إرسال أمر إتمام المعاملة لشبكة Pi الرئيسية
+    const response = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/complete`, {
+      method: 'POST',
       headers: {
-        Authorization: `Key ${process.env.PI_API_KEY}`,
-        "Content-Type": "application/json"
-      }
+        'Authorization': `Key ${PI_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ txid })
     });
 
-    // 2️⃣ الإكمال (Complete)
-    const completeRes = await fetch(
-      `https://api.minepi.com/v2/payments/${paymentId}/complete`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Key ${process.env.PI_API_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
-
-    const data = await completeRes.json();
-    return res.status(200).json(data);
-
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+    if (response.ok) {
+      return res.status(200).json({ success: true });
+    } else {
+      const errorData = await response.json();
+      return res.status(400).json({ success: false, error: errorData.message });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 }
