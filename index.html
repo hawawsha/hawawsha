@@ -3,51 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوق Pi - المتجر الرسمي</title>
+    <title>سوق Pi - تسجيل الدخول</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #673ab7; }
-        .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin: 10px; display: inline-block; width: 200px; }
-        .btn-buy { background-color: #673ab7; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .btn-buy:hover { background-color: #512da8; }
-        .status-msg { color: green; font-weight: bold; margin-top: 20px; }
+        body { font-family: sans-serif; background-color: #f4f4f9; text-align: center; padding: 50px; }
+        .card { background: white; padding: 30px; border-radius: 15px; shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
+        .btn-auth { background-color: #673ab7; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 18px; margin-top: 20px; }
+        #user-info { margin-top: 20px; color: #2e7d32; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>مرحباً بكم في سوق Pi العربي 🍎</h1>
-        <p>تطبيق souq pi-v2 جاهز لخدمتكم</p>
-        <hr>
+    <div class="card">
+        <h1>مرحباً بك في سوق Pi 🍎</h1>
+        <p>الرجاء تسجيل الدخول ليتم احتساب زيارتك وتفعيل المتجر</p>
         
-        <div class="product-card">
-            <h3>منتج تجريبي</h3>
-            <p>السعر: 1.0 Pi</p>
-            <button class="btn-buy" onclick="testPayment()">شراء الآن</button>
-        </div>
-
-        <div id="status" class="status-msg">
-            جاهز لاستقبال الزوار الموثقين ✅
-        </div>
+        <button class="btn-auth" onclick="login()">تسجيل الدخول عبر Pi</button>
+        
+        <div id="user-info"></div>
     </div>
 
     <script>
-        // إعدادات Pi SDK
         const Pi = window.Pi;
         Pi.init({ version: "2.0", sandbox: false });
 
-        async function testPayment() {
+        async function login() {
             try {
-                const payment = await Pi.createPayment({
-                    amount: 1.0,
-                    memo: "شراء منتج تجريبي من سوق Pi",
-                    metadata: { productId: "test-001" }
-                });
-                document.getElementById('status').innerText = "شكراً لزيارتك وتفاعلك!";
+                // طلب تسجيل الدخول ومشاركة البيانات الأساسية
+                const scopes = ['username', 'payments'];
+                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+                
+                document.getElementById('user-info').innerText = "أهلاً بك: " + auth.user.username + " ✅ تم تسجيل دخولك بنجاح";
+                console.log("User Authenticated:", auth.user.username);
+                
+                // هنا يتم إبلاغ النظام بوجود مستخدم جديد
             } catch (err) {
-                console.error(err);
+                console.error("Authentication failed", err);
+                alert("فشل تسجيل الدخول، تأكد من استخدام متصفح Pi");
             }
+        }
+
+        function onIncompletePaymentFound(payment) {
+            console.log("Incomplete payment found", payment);
         }
     </script>
 </body>
