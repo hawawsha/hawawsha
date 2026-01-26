@@ -1,148 +1,54 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>توثيق التطبيق – الخطوة 10</title>
-
-  <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-    }
-    .card {
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    button {
-      background: #8a2be2;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    #status {
-      margin-top: 16px;
-      font-size: 14px;
-      color: #444;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوق Pi - المتجر الرسمي</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #673ab7; }
+        .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin: 10px; display: inline-block; width: 200px; }
+        .btn-buy { background-color: #673ab7; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .btn-buy:hover { background-color: #512da8; }
+        .status-msg { color: green; font-weight: bold; margin-top: 20px; }
+    </style>
 </head>
-
 <body>
-  <div class="card">
-    <h2>توثيق التطبيق – الخطوة 10</h2>
-    <button id="payBtn">تفعيل الآن (1 Pi)</button>
-    <div id="status">جاهز...</div>
-  </div>
+    <div class="container">
+        <h1>مرحباً بكم في سوق Pi العربي 🍎</h1>
+        <p>تطبيق souq pi-v2 جاهز لخدمتكم</p>
+        <hr>
+        
+        <div class="product-card">
+            <h3>منتج تجريبي</h3>
+            <p>السعر: 1.0 Pi</p>
+            <button class="btn-buy" onclick="testPayment()">شراء الآن</button>
+        </div>
 
-<script>
-  const Pi = window.Pi;
+        <div id="status" class="status-msg">
+            جاهز لاستقبال الزوار الموثقين ✅
+        </div>
+    </div>
 
-  // Mainnet فقط
-  Pi.init({
-    version: "2.0",
-    sandbox: false
-  });
+    <script>
+        // إعدادات Pi SDK
+        const Pi = window.Pi;
+        Pi.init({ version: "2.0", sandbox: false });
 
-  const payBtn = document.getElementById("payBtn");
-  const statusDiv = document.getElementById("status");
-
-  function setStatus(text) {
-    statusDiv.innerText = text;
-  }
-
-  payBtn.addEventListener("click", async () => {
-    payBtn.disabled = true;
-    setStatus("جاري المصادقة...");
-
-    try {
-      await Pi.authenticate(
-        ["payments"],
-        () => {}
-      );
-
-      setStatus("جاري إنشاء الدفع...");
-
-      await Pi.createPayment(
-        {
-          amount: 1,
-          memo: "Step 10 App Verification",
-          metadata: { step: 10 }
-        },
-        {
-          // 1️⃣ عند جاهزية الموافقة
-          onReadyForServerApproval: async (paymentId) => {
-            setStatus("إرسال الموافقة للسيرفر...");
-
-            const res = await fetch("/api/approve", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ paymentId })
-            });
-
-            if (!res.ok) {
-              throw new Error("فشل approve");
+        async function testPayment() {
+            try {
+                const payment = await Pi.createPayment({
+                    amount: 1.0,
+                    memo: "شراء منتج تجريبي من سوق Pi",
+                    metadata: { productId: "test-001" }
+                });
+                document.getElementById('status').innerText = "شكراً لزيارتك وتفاعلك!";
+            } catch (err) {
+                console.error(err);
             }
-          },
-
-          // 2️⃣ عند جاهزية الإتمام
-          onReadyForServerCompletion: async (paymentId, txid) => {
-            setStatus("إتمام الدفع...");
-
-            const res = await fetch("/api/complete", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ paymentId, txid })
-            });
-
-            if (!res.ok) {
-              throw new Error("فشل complete");
-            }
-
-            setStatus("✅ تم التفعيل بنجاح");
-          },
-
-          // 3️⃣ إلغاء
-          onCancel: () => {
-            setStatus("تم إلغاء العملية");
-            payBtn.disabled = false;
-          },
-
-          // 4️⃣ خطأ
-          onError: (err) => {
-            console.error(err);
-            setStatus("❌ حدث خطأ");
-            payBtn.disabled = false;
-          }
         }
-      );
-
-    } catch (err) {
-      console.error(err);
-      setStatus("❌ فشل التنفيذ");
-      payBtn.disabled = false;
-    }
-  });
-</script>
+    </script>
 </body>
 </html>
