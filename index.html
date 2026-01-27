@@ -3,90 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOUQ PI-V2 | متجر الهواوشه العالمي</title>
+    <title>SOUQ PI | سوق بي اي</title>
     <style>
-        :root { --gold: #d4af37; --dark: #0f0f0f; --card: #1e1e1e; --purple: #673ab7; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--dark); color: white; text-align: center; margin: 0; padding: 0; }
-        .container { max-width: 800px; margin: auto; padding: 20px; }
-        
-        /* رسالة الترحيب */
-        .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .welcome-box { background: var(--card); border: 2px solid var(--gold); padding: 30px; border-radius: 20px; max-width: 80%; }
-        
-        /* البحث والأقسام */
-        .search-bar { width: 90%; padding: 12px; border-radius: 25px; border: 1px solid var(--gold); background: #1a1a1a; color: white; margin: 20px 0; outline: none; }
-        .categories { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding: 10px; }
-        .cat-btn { background: #2d2d2d; color: var(--gold); border: 1px solid var(--gold); padding: 8px 18px; border-radius: 15px; cursor: pointer; white-space: nowrap; }
-        
-        /* المنتجات */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .product-card { background: var(--card); border: 1px solid #333; border-radius: 20px; padding: 15px; transition: 0.3s; }
-        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .product-image { width: 100%; height: 180px; border-radius: 15px; object-fit: cover; }
-        .price-tag { color: var(--gold); font-size: 22px; font-weight: bold; margin: 10px 0; display: block; }
-        
-        /* عداد الزوار */
-        .visitor-counter { background: #1a1a1a; color: #888; padding: 10px; border-radius: 10px; font-size: 13px; margin-top: 40px; border: 1px solid #222; }
-        .live-dot { height: 8px; width: 8px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-left: 5px; animation: blink 1s infinite; }
-        
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        .buy-btn { background: var(--purple); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
-        
-        /* نموذج الطلبات */
-        .order-form { background: #151515; border: 1px dashed var(--gold); padding: 20px; border-radius: 20px; margin-top: 40px; text-align: right; }
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; }
+        :root { --pi-purple: #673ab7; --gold: #d4af37; --dark-bg: #0f0f0f; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--pi-purple); color: white; margin: 0; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; background: var(--dark-bg); min-height: 100vh; }
+        .app-header { padding: 40px 20px; }
+        .app-title { font-size: 52px; font-weight: bold; color: white; margin-bottom: 5px; }
+        .app-subtitle { font-size: 16px; color: #ccc; margin-bottom: 30px; }
+        .main-button { background: white; color: var(--pi-purple); border: none; padding: 15px; width: 90%; border-radius: 12px; margin: 10px 0; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+        .view-services { background: var(--gold); color: black; margin-top: 20px; }
+        .product-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 20px; display: none; }
+        .product-card { background: #1e1e1e; border: 1px solid var(--gold); border-radius: 15px; padding: 15px; text-align: right; }
+        .product-img { width: 100%; height: 200px; border-radius: 10px; object-fit: cover; }
+        .visitor-counter { margin-top: 30px; font-size: 14px; color: #888; border-top: 1px solid #333; padding-top: 20px; }
     </style>
 </head>
 <body>
-
-    <div id="welcome" class="welcome-overlay">
-        <div class="welcome-box">
-            <h2 style="color: var(--gold);">SOUQ PI-V2</h2>
-            <p>أهلاً بك في متجر الهواوشه العالمي. نحن ندعم سعر الإجماع GCV رسمياً.</p>
-            <button class="buy-btn" onclick="closeWelcome()">دخول المتجر</button>
-        </div>
-    </div>
-
     <div class="container">
-        <div style="background: var(--gold); color: black; font-weight: bold; padding: 5px; border-radius: 5px; font-size: 12px; display: inline-block;">إصدار التفعيل التجريبي - GCV SUPPORT</div>
-        <h1>ALHAWAWSHEH PI MARKET</h1>
-        
-        <input type="text" class="search-bar" placeholder="ابحث عن منتجات بسعر Pi...">
-        
-        <div class="categories">
-            <button class="cat-btn">الكل</button>
-            <button class="cat-btn">جوالات</button>
-            <button class="cat-btn">أجهزة منزلية</button>
-            <button class="cat-btn">خدمات برمجية</button>
+        <div class="app-header">
+            <div class="app-title">SOUQ PI</div>
+            <div class="app-subtitle">A Multi-Vendor Marketplace for Pi Network</div>
+            <p>سوق بي اي: وجهتكم الموثوقة للمقايضة بسعر GCV</p>
         </div>
+        
+        <button class="main-button">📄 Digital CV</button>
+        <button class="main-button">💬 Mini Blog</button>
+        <button class="main-button" onclick="alert('سنتواصل معك قريباً لخدمتك')">📧 Contact Us</button>
+        
+        <button class="main-button view-services" onclick="toggleProducts()">✨ View Services (تصفح المتجر)</button>
 
-        <div class="product-grid">
+        <div id="products" class="product-grid">
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=400" class="product-image">
+                <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=400" class="product-img">
                 <h3>iPhone 16 Pro Max</h3>
-                <span class="price-tag">0.00318 π</span>
-                <button class="buy-btn" onclick="launchPayment()">مقايضة الآن</button>
+                <div style="color: var(--gold); font-weight: bold; font-size: 20px;">0.00318 π</div>
+                <button class="main-button" style="width:100%;" onclick="pay()">شراء الآن</button>
             </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=400" class="product-image">
-                <h3>صانعة قهوة إسبراسو</h3>
-                <span class="price-tag">0.00047 π</span>
-                <button class="buy-btn" onclick="launchPayment()">مقايضة الآن</button>
-            </div>
-        </div>
-
-        <div class="order-form">
-            <h3 style="text-align:center; color: var(--gold);">طلب منتج خاص</h3>
-            <input type="text" id="orderName" placeholder="ما هو المنتج الذي تبحث عنه؟">
-            <textarea id="orderDetails" placeholder="المواصفات (اللون، الكمية...)"></textarea>
-            <button class="buy-btn" style="background: var(--gold); color: black;" onclick="sendOrder()">إرسال طلب المقايضة</button>
         </div>
 
         <div class="visitor-counter">
-            <span class="live-dot"></span> يوجد الآن <strong id="v-count">142</strong> رائداً يتصفحون المتجر
+            🟢 يوجد الآن <span id="count">165</span> رائداً يتسوقون في SOUQ PI
         </div>
-        
-        <p style="font-size: 11px; color: #444; margin-top: 20px;">تطبيق موثق ضمن بيئة Pi Network التجريبية</p>
     </div>
 
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
@@ -95,33 +53,22 @@
         Pi.init({ version: "2.0", sandbox: false });
 
         async function showAd() {
-            try { await Pi.Ads.showAd({ adUnitId: "put_your_id_here" }); } 
-            catch (err) { console.log("Ad info"); }
+            try { await Pi.Ads.showAd({ adUnitId: "put_your_id_here" }); } catch(e){}
         }
 
-        function closeWelcome() {
-            document.getElementById('welcome').style.display = 'none';
-            showAd(); // تشغيل إعلان فور الدخول لزيادة أرباحك وإنهاء الـ Pending
-        }
-
-        function launchPayment() {
+        function toggleProducts() {
+            const grid = document.getElementById('products');
+            grid.style.display = grid.style.display === 'none' ? 'grid' : 'none';
             showAd();
-            alert("بوابة دفع Pi ستفتح فور اكتمال مراجعة الدومين alhawawsheh.pi");
         }
 
-        function sendOrder() {
-            const prod = document.getElementById('orderName').value;
-            if(prod) {
-                alert("تم استلام طلبك لـ (" + prod + "). سيتم مراجعته وتوفيره بسعر GCV.");
-                showAd();
-            }
-        }
+        function pay() { showAd(); alert("بوابة الدفع ستفعل فور تفعيل الدومين."); }
 
-        // تحديث عداد الزوار وهمياً لزيادة الحماس
         setInterval(() => {
-            const count = document.getElementById('v-count');
-            count.innerText = Math.floor(Math.random() * (160 - 130) + 130);
-        }, 5000);
+            document.getElementById('count').innerText = Math.floor(Math.random() * (210 - 150) + 150);
+        }, 4000);
+        
+        window.onload = showAd;
     </script>
 </body>
 </html>
