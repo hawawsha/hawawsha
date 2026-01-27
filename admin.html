@@ -1,0 +1,35 @@
+<div class="product-card" style="border-style: dashed; opacity: 0.9;">
+    <h3 style="color: #d4af37;">إضافة منتج جديد (لوحة التحكم)</h3>
+    <form id="addProductForm" style="display: flex; flex-direction: column; gap: 10px; padding: 10px;">
+        <input type="text" placeholder="اسم المنتج" id="pName" style="padding: 10px; border-radius: 5px; border: 1px solid #d4af37; background: #333; color: white;">
+        
+        <select id="pCategory" style="padding: 10px; border-radius: 5px; background: #333; color: white; border: 1px solid #d4af37;">
+            <option value="electronics">إلكترونيات</option>
+            <option value="digital">خدمات رقمية</option>
+            <option value="other">سلع أخرى</option>
+        </select>
+
+        <input type="number" step="0.00001" placeholder="السعر بـ Pi (حسب GCV)" id="pPrice" style="padding: 10px; border-radius: 5px; border: 1px solid #d4af37; background: #333; color: white;">
+        
+        <div style="font-size: 12px; color: #888; text-align: right;">
+            * ملاحظة: 1 Pi = 314,159$ (GCV)
+        </div>
+
+        <button type="button" onclick="calculateGCV()" style="background: #444; color: #d4af37; border: 1px solid #d4af37; padding: 5px; cursor: pointer;">تحقق من القيمة بالدولار</button>
+        
+        <button type="submit" class="buy-btn" style="background: #28a745;">حفظ المنتج ونشره</button>
+    </form>
+</div>
+
+<script>
+function calculateGCV() {
+    const piAmount = document.getElementById('pPrice').value;
+    const gcvRate = 314159;
+    if(piAmount) {
+        const usdValue = (piAmount * gcvRate).toLocaleString();
+        alert("هذا السعر يعادل تقريباً: " + usdValue + " دولار بسعر الإجماع");
+    } else {
+        alert("يرجى إدخال كمية Pi أولاً");
+    }
+}
+</script>
