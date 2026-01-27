@@ -6,17 +6,19 @@
     <title>SOUQ PI | سوق بي اي</title>
     <style>
         :root { --pi-purple: #673ab7; --gold: #d4af37; --dark-bg: #0f0f0f; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--pi-purple); color: white; margin: 0; text-align: center; }
-        .container { max-width: 600px; margin: auto; padding: 20px; background: var(--dark-bg); min-height: 100vh; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); color: white; margin: 0; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; min-height: 100vh; }
         .app-header { padding: 40px 20px; }
         .app-title { font-size: 52px; font-weight: bold; color: white; margin-bottom: 5px; }
         .app-subtitle { font-size: 16px; color: #ccc; margin-bottom: 30px; }
-        .main-button { background: white; color: var(--pi-purple); border: none; padding: 15px; width: 90%; border-radius: 12px; margin: 10px 0; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+        .main-button { background: white; color: var(--pi-purple); border: none; padding: 15px; width: 90%; border-radius: 12px; margin: 10px 0; font-size: 18px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
         .view-services { background: var(--gold); color: black; margin-top: 20px; }
         .product-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 20px; display: none; }
         .product-card { background: #1e1e1e; border: 1px solid var(--gold); border-radius: 15px; padding: 15px; text-align: right; }
         .product-img { width: 100%; height: 200px; border-radius: 10px; object-fit: cover; }
         .visitor-counter { margin-top: 30px; font-size: 14px; color: #888; border-top: 1px solid #333; padding-top: 20px; }
+        .live-dot { height: 8px; width: 8px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-left: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -26,12 +28,12 @@
             <div class="app-subtitle">A Multi-Vendor Marketplace for Pi Network</div>
             <p>سوق بي اي: وجهتكم الموثوقة للمقايضة بسعر GCV</p>
         </div>
+
+        <button class="main-button">Digital CV 📄</button>
+        <button class="main-button">Mini Blog 💬</button>
+        <button class="main-button" onclick="alert('سنتواصل معك قريباً')">Contact Us 📧</button>
         
-        <button class="main-button">📄 Digital CV</button>
-        <button class="main-button">💬 Mini Blog</button>
-        <button class="main-button" onclick="alert('سنتواصل معك قريباً لخدمتك')">📧 Contact Us</button>
-        
-        <button class="main-button view-services" onclick="toggleProducts()">✨ View Services (تصفح المتجر)</button>
+        <button class="main-button view-services" onclick="toggleProducts()">View Services (تصفح المتجر) ✨</button>
 
         <div id="products" class="product-grid">
             <div class="product-card">
@@ -43,7 +45,7 @@
         </div>
 
         <div class="visitor-counter">
-            🟢 يوجد الآن <span id="count">165</span> رائداً يتسوقون في SOUQ PI
+            <span class="live-dot"></span> يوجد الآن <span id="count" style="color: white; font-weight: bold;">174</span> رائداً يتسوقون في SOUQ PI
         </div>
     </div>
 
@@ -64,9 +66,12 @@
 
         function pay() { showAd(); alert("بوابة الدفع ستفعل فور تفعيل الدومين."); }
 
+        // التحديث الجديد: العداد يتغير كل 10 ثوانٍ (10000 مللي ثانية)
         setInterval(() => {
-            document.getElementById('count').innerText = Math.floor(Math.random() * (210 - 150) + 150);
-        }, 4000);
+            const currentCount = parseInt(document.getElementById('count').innerText);
+            const change = Math.floor(Math.random() * 11) - 5; // تغيير طفيف بالزيادة أو النقصان
+            document.getElementById('count').innerText = currentCount + change;
+        }, 10000);
         
         window.onload = showAd;
     </script>
