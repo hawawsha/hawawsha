@@ -3,84 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOUQ PI | سوق بـاي</title>
+    <title>SOUQ PI JORDAN | سوق بـاي الأردن</title>
     <style>
         body {
-            background-color: #6a1b9a; /* اللون الأرجواني الرسمي */
+            background-color: #4a148c; /* لون أرجواني ملكي فخم */
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 500px;
             margin: auto;
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        h1 { color: #ffca28; } /* اللون الذهبي للعناوين */
+        h1 { color: #ffca28; margin-bottom: 10px; font-size: 24px; }
         .counter {
-            font-size: 2em;
-            margin: 20px 0;
+            font-size: 2.5em;
+            margin: 15px 0;
             padding: 10px;
-            background: #4a148c;
-            border-radius: 10px;
+            background: #310d5a;
+            border-radius: 12px;
             border: 2px solid #ffca28;
+            color: #ffca28;
+            font-weight: bold;
         }
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
         .btn {
             background-color: #ffca28;
-            color: #4a148c;
-            padding: 15px;
+            color: #310d5a;
+            padding: 14px;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: bold;
-            transition: 0.3s;
+            font-size: 14px;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn:hover { background-color: #ffd54f; transform: scale(1.05); }
-        .footer { margin-top: 30px; font-size: 0.8em; opacity: 0.8; }
+        .btn:hover { background-color: #fff; transform: translateY(-3px); }
+        .btn-special {
+            background-color: #4caf50;
+            color: white;
+            grid-column: span 2;
+            margin-top: 5px;
+        }
+        .footer { margin-top: 25px; font-size: 0.8em; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>SOUQ PI 🟣</h1>
-        <p>مرحباً بك في سوق بـاي المعتمد - شريكك الموثوق</p>
+        <h1>SOUQ PI JORDAN 🇯🇴</h1>
+        <p>مرحباً بك في سوق بـاي الأردن - النسخة الرسمية</p>
 
-        <div class="counter" id="visitor-count">182</div>
-        <p>رائداً يتصفحون المتجر الآن</p>
+        <div class="counter" id="visitor-count">245</div>
+        <p>رائداً يتسوقون الآن من الأردن</p>
 
         <div class="btn-grid">
-            <a href="iraq-pages.html" class="btn">صفحات العراق 🇮🇶</a>
+            <a href="jordan-pages.html" class="btn">صفحات الأردن 🇯🇴</a>
             <a href="digital-cv.html" class="btn">السيرة الذاتية 📄</a>
             <a href="blog.html" class="btn">المدونة المصغرة 📝</a>
-            <a href="contact.html" class="btn">تواصل معنا 📞</a>
-        </div>
-
-        <div style="margin-top: 20px;">
-            <a href="services.html" class="btn" style="display: block; background-color: #4caf50; color: white;">عرض الخدمات المميزة 🚀</a>
+            <a href="contact.html" class="btn">اتصل بنا 📞</a>
+            
+            <a href="services.html" class="btn btn-special">عرض الخدمات والمنتجات 🚀</a>
         </div>
 
         <div class="footer">
-            <p>جميع الحقوق محفوظة لـ @alhawawsheh1524</p>
+            <p>مطور بواسطة: @alhawawsheh1524</p>
+            <p>جميع الحقوق محفوظة لشبكة بـاي - الأردن</p>
         </div>
     </div>
 
     <script>
-        // برمجة العداد التلقائي ليبقى حياً
-        let count = 182;
+        // برمجة العداد ليكون أكثر واقعية
+        let count = 245;
         setInterval(() => {
-            count += Math.floor(Math.random() * 3) + 1;
+            count += Math.floor(Math.random() * 2) + 1;
             document.getElementById('visitor-count').innerText = count;
-        }, 10000); // يتحدث كل 10 ثوانٍ
+        }, 8000); 
     </script>
 </body>
 </html>
