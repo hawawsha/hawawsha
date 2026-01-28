@@ -56,13 +56,13 @@
         }
         .btn:hover { transform: scale(1.02); }
 
-        /* قسم العداد (نقلناه للأسفل) */
+        /* قسم العداد (في أسفل الصفحة) */
         .counter-box {
             border: 2px solid #ffca28;
             border-radius: 20px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.05);
-            margin-top: auto; /* يدفع العداد لآخر الشاشة */
+            margin-top: auto; 
             margin-bottom: 20px;
         }
         .counter-number { 
@@ -120,12 +120,18 @@
     <script>
         let currentCount = 246;
         const counterElement = document.getElementById('liveCounter');
+        
+        // العداد يتحرك الآن كل 10 ثوانٍ (10000ms)
         setInterval(() => {
             const change = Math.random() > 0.5 ? 1 : -1;
             currentCount += change;
+            
+            // للحفاظ على الرقم في نطاق منطقي
             if(currentCount < 240) currentCount = 240;
+            if(currentCount > 300) currentCount = 300;
+            
             counterElement.innerText = currentCount;
-        }, 4000);
+        }, 10000); // 10 ثوانٍ
     </script>
 
 </body>
