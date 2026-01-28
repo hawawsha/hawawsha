@@ -20,17 +20,14 @@
             max-width: 450px;
             width: 100%;
             margin: 0 auto;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* العنوان */
-        .header-section { margin-bottom: 25px; }
+        /* العنوان العلوي */
+        .header-section { margin-top: 20px; margin-bottom: 30px; }
         h1 { color: #ffca28; margin: 0; font-size: 1.8em; }
-        .sub-title { opacity: 0.8; font-size: 0.9em; margin-top: 5px; }
+        .sub-title { opacity: 0.8; font-size: 0.9em; }
 
-        /* الأزرار */
+        /* الأزرار الرئيسية */
         .btn {
             display: block;
             text-decoration: none;
@@ -40,26 +37,32 @@
             transition: 0.3s;
             border: 2px solid #ffca28;
             padding: 16px;
-            font-size: 1.1em;
             color: white;
             background: rgba(255, 255, 255, 0.05);
         }
-        .btn-gold { background: #ffca28; color: #310d5a; font-size: 1.2em; }
-        .btn:active { transform: scale(0.98); }
+        .btn-gold { background: #ffca28; color: #310d5a; }
 
-        /* العداد في الأسفل */
-        .counter-box {
-            border: 2px solid #ffca28;
-            border-radius: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            margin-top: auto; 
-            margin-bottom: 20px;
+        /* العداد العائم (صغير في الزاوية اليمين تحت) */
+        .floating-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 202, 40, 0.95); /* لون ذهبي */
+            color: #310d5a;
+            padding: 8px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1000;
+            border: 1px solid #310d5a;
+            min-width: 60px;
         }
-        .counter-number { font-size: 3.2em; font-weight: bold; color: #ffca28; display: block; }
-        .counter-text { font-size: 0.95em; opacity: 0.9; }
+        .count-val { font-size: 1.2em; font-weight: bold; line-height: 1; }
+        .count-label { font-size: 0.6em; font-weight: bold; margin-top: 2px; }
 
-        .footer { font-size: 0.75em; opacity: 0.4; padding-bottom: 10px; }
+        .footer { margin-top: 50px; font-size: 0.7em; opacity: 0.4; }
     </style>
 </head>
 <body>
@@ -77,23 +80,19 @@
             <a href="blog.html" class="btn">📝 مدونة الرواد</a>
         </div>
 
-        <div class="counter-box">
-            <span class="counter-number" id="liveCounter">246</span>
-            <span class="counter-text">رائد متصل الآن</span>
-        </div>
+        <div class="footer">SOUQ PI JORDAN © 2026</div>
+    </div>
 
-        <div class="footer">
-            SOUQ PI JORDAN © 2026
-        </div>
+    <div class="floating-counter">
+        <span class="count-val" id="liveCounter">247</span>
+        <span class="count-label">متصل الآن</span>
     </div>
 
     <script>
-        // العداد يتحرك كل 10 ثواني بمنتهى الهدوء
-        let currentCount = 246;
+        let currentCount = 247;
         const counterElement = document.getElementById('liveCounter');
         setInterval(() => {
-            const change = Math.random() > 0.5 ? 1 : -1;
-            currentCount += change;
+            currentCount += Math.random() > 0.5 ? 1 : -1;
             if(currentCount < 240) currentCount = 240;
             if(counterElement) counterElement.innerText = currentCount;
         }, 10000);
