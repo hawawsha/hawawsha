@@ -6,36 +6,16 @@
     <title>سوق الأردن - الدفع والطلب</title>
     <style>
         body {
-            background-color: #4a148c; 
+            background-color: #0f051a; /* لون داكن كما في الصورة */
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             margin: 0;
             padding: 20px;
         }
-        .product-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #ffca28;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px auto;
-            max-width: 300px;
-        }
-        .btn-pay {
-            background-color: #4caf50;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        /* نافذة التنبيه */
+        /* نافذة التنبيه - مطابقة للصورة الأخيرة */
         #wallet-modal {
-            display: none;
+            display: block; /* تظهر فوراً للتأكد من التصميم */
             position: fixed;
             top: 50%;
             left: 50%;
@@ -51,7 +31,7 @@
             border: 3px solid #ffca28;
         }
         .overlay {
-            display: none;
+            display: block;
             position: fixed;
             top: 0;
             left: 0;
@@ -60,25 +40,43 @@
             background: rgba(0,0,0,0.8);
             z-index: 999;
         }
-        .modal-header { color: #4a148c; font-weight: bold; margin-bottom: 15px; font-size: 1.2em; }
-        .modal-msg { background: #fff3e0; padding: 15px; border-right: 5px solid #ff9800; margin: 15px 0; font-size: 1.1em; line-height: 1.6; }
-        .close-btn { background: #4a148c; color: white; padding: 10px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .modal-header { 
+            color: #4a148c; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .modal-msg { 
+            background: #fff3e0; 
+            padding: 15px; 
+            border-right: 5px solid #ff9800; 
+            margin: 20px 0; 
+            font-size: 1.1em; 
+            line-height: 1.6;
+            text-align: center;
+        }
+        .close-btn { 
+            background: #4a148c; 
+            color: white; 
+            padding: 12px 40px; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
 
-    <h1>سوق الأردن 🇯🇴</h1>
-
-    <div class="product-card">
-        <h3>آيفون 15 برومكس</h3>
-        <p style="color: #ffca28; font-weight: bold;">السعر: 0.0038 Pi</p>
-        <button class="btn-pay" onclick="openWallet()">اطلب الآن عبر المحفظة 🛒</button>
-    </div>
-
     <div class="overlay" id="overlay"></div>
     <div id="wallet-modal">
         <div class="modal-header">🛡️ نظام دفع Pi Network</div>
-        <p>تم الاتصال بتطبيق Pi Browser بنجاح...</p>
+        <p style="font-size: 1em;">تم الاتصال بتطبيق Pi Browser بنجاح...</p>
         
         <div class="modal-msg">
             <strong>تنبيه رسمي:</strong><br>
@@ -89,10 +87,6 @@
     </div>
 
     <script>
-        function openWallet() {
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('wallet-modal').style.display = 'block';
-        }
         function closeWallet() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('wallet-modal').style.display = 'none';
