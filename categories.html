@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أقسام سوق باي الأردن</title>
+    <style>
+        body { background-color: #310d5a; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; }
+        h1 { color: #ffca28; }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .cat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffca28;
+            padding: 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .cat-card:hover { background: #ffca28; color: #310d5a; transform: translateY(-5px); }
+        .cat-icon { font-size: 2.5em; display: block; margin-bottom: 10px; }
+        .cat-name { font-weight: bold; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+    <h1>🗂️ أقسام المتجر</h1>
+    <p>اختر القسم لتصفح منتجات المقايضة المستقبلية</p>
+
+    <div class="categories-grid">
+        <a href="jordan-pages.html" class="cat-card">
+            <span class="cat-icon">📱</span>
+            <span class="cat-name">الأجهزة والخلويات</span>
+        </a>
+
+        <a href="#" class="cat-card">
+            <span class="cat-icon">💻</span>
+            <span class="cat-name">الإلكترونيات</span>
+        </a>
+
+        <a href="#" class="cat-card">
+            <span class="cat-icon">🚗</span>
+            <span class="cat-name">السيارات</span>
+        </a>
+
+        <a href="#" class="cat-card">
+            <span class="cat-icon">🏠</span>
+            <span class="cat-name">العقارات</span>
+        </a>
+
+        <a href="#" class="cat-card">
+            <span class="cat-icon">👔</span>
+            <span class="cat-name">الموضة</span>
+        </a>
+    </div>
+
+    <a href="index.html" style="color: #ffca28; text-decoration: none;">⬅️ العودة للرئيسية</a>
+
+</body>
+</html>
