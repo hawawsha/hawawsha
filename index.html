@@ -3,91 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOUQ PI | سوق بي اي</title>
+    <title>SOUQ PI | سوق بـاي</title>
     <style>
-        :root { --pi-purple: #673ab7; --gold: #d4af37; --dark-bg: #0f0f0f; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); color: white; margin: 0; text-align: center; overflow-x: hidden; }
-        .container { max-width: 600px; margin: auto; padding: 20px; min-height: 100vh; }
-        .app-header { padding: 40px 20px; }
-        .app-title { font-size: 52px; font-weight: bold; color: white; margin-bottom: 5px; }
-        .main-button { background: white; color: var(--pi-purple); border: none; padding: 15px; width: 90%; border-radius: 12px; margin: 10px 0; font-size: 18px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
-        .view-services { background: var(--gold); color: black; margin-top: 20px; }
-        
-        /* تفعيل الأقسام كصفحات تنبثق */
-        .section-content { display: none; background: #1a1a1a; border: 1px solid var(--gold); padding: 20px; border-radius: 15px; margin-top: 20px; text-align: right; }
-        .product-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .product-card { background: #222; border-radius: 15px; padding: 15px; }
-        .product-img { width: 100%; height: 200px; border-radius: 10px; object-fit: cover; }
-        
-        .visitor-counter { margin-top: 30px; font-size: 14px; color: #888; border-top: 1px solid #333; padding-top: 20px; }
-        .live-dot { height: 8px; width: 8px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-left: 5px; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        body {
+            background-color: #6a1b9a; /* اللون الأرجواني الرسمي */
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        h1 { color: #ffca28; } /* اللون الذهبي للعناوين */
+        .counter {
+            font-size: 2em;
+            margin: 20px 0;
+            padding: 10px;
+            background: #4a148c;
+            border-radius: 10px;
+            border: 2px solid #ffca28;
+        }
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #ffca28;
+            color: #4a148c;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #ffd54f; transform: scale(1.05); }
+        .footer { margin-top: 30px; font-size: 0.8em; opacity: 0.8; }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <div class="app-header">
-            <div class="app-title">SOUQ PI</div>
-            <p>سوق بي اي: المقايضة الآمنة بسعر GCV</p>
+        <h1>SOUQ PI 🟣</h1>
+        <p>مرحباً بك في سوق بـاي المعتمد - شريكك الموثوق</p>
+
+        <div class="counter" id="visitor-count">182</div>
+        <p>رائداً يتصفحون المتجر الآن</p>
+
+        <div class="btn-grid">
+            <a href="iraq-pages.html" class="btn">صفحات العراق 🇮🇶</a>
+            <a href="digital-cv.html" class="btn">السيرة الذاتية 📄</a>
+            <a href="blog.html" class="btn">المدونة المصغرة 📝</a>
+            <a href="contact.html" class="btn">تواصل معنا 📞</a>
         </div>
 
-        <button class="main-button" onclick="showSection('cv')">Digital CV 📄</button>
-        <div id="cv" class="section-content">
-            <h3 style="color:var(--gold)">السيرة الذاتية الرقمية</h3>
-            <p>الاسم: متجر سوق بي اي (Souq Pi)</p>
-            <p>التخصص: وسيط معتمد للمقايضة بسعر الإجماع GCV.</p>
-            <p>الهدف: دعم اقتصاد Pi Network وتسهيل وصول السلع للرواد.</p>
+        <div style="margin-top: 20px;">
+            <a href="services.html" class="btn" style="display: block; background-color: #4caf50; color: white;">عرض الخدمات المميزة 🚀</a>
         </div>
 
-        <button class="main-button" onclick="showSection('blog')">Mini Blog 💬</button>
-        <div id="blog" class="section-content">
-            <h3 style="color:var(--gold)">آخر الأخبار</h3>
-            <p>• تحديث جديد: تم ربط المتجر بـ App Studio بنجاح.</p>
-            <p>• نحن ندعم الآن مقايضة الهواتف الذكية بسعر GCV رسمياً.</p>
-        </div>
-
-        <button class="main-button" onclick="showSection('contact')">Contact Us 📧</button>
-        <div id="contact" class="section-content">
-            <h3 style="color:var(--gold)">اتصل بنا</h3>
-            <p>لطلب منتجات خاصة، يرجى مراسلتنا عبر محفظة Pi الخاصة بك أو عبر البريد المرتبط بالدومين alhawawsheh.pi.</p>
-        </div>
-        
-        <button class="main-button view-services" onclick="showSection('products')">View Services (تصفح المتجر) ✨</button>
-
-        <div id="products" class="section-content">
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=400" class="product-img">
-                    <h3>iPhone 16 Pro Max</h3>
-                    <div style="color: var(--gold); font-weight: bold;">0.00318 π</div>
-                    <button class="main-button" style="width:100%;" onclick="pay()">شراء الآن</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="visitor-counter">
-            <span class="live-dot"></span> يوجد الآن <span id="count" style="color: white; font-weight: bold;">182</span> رائداً يتسوقون في SOUQ PI
+        <div class="footer">
+            <p>جميع الحقوق محفوظة لـ @alhawawsheh1524</p>
         </div>
     </div>
 
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <script>
-        const Pi = window.Pi;
-        Pi.init({ version: "2.0", sandbox: false });
-
-        function showSection(id) {
-            const sections = document.querySelectorAll('.section-content');
-            sections.forEach(s => s.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-            try { Pi.Ads.showAd({ adUnitId: "put_your_id_here" }); } catch(e){}
-        }
-
-        function pay() { alert("بوابة الدفع ستفعل فور تفعيل الدومين."); }
-
+        // برمجة العداد التلقائي ليبقى حياً
+        let count = 182;
         setInterval(() => {
-            const count = document.getElementById('count');
-            count.innerText = parseInt(count.innerText) + (Math.floor(Math.random() * 5) - 2);
-        }, 10000); // تحديث كل 10 ثوانٍ
+            count += Math.floor(Math.random() * 3) + 1;
+            document.getElementById('visitor-count').innerText = count;
+        }, 10000); // يتحدث كل 10 ثوانٍ
     </script>
 </body>
 </html>
