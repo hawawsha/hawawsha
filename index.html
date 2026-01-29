@@ -3,114 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوق باي الأردن | الواجهة الرئيسية</title>
+    <title>سوق باي الأردن | Pi Market Jordan</title>
     <style>
         body {
-            background-color: #310d5a;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container { padding: 20px; }
-
-        h1 {
-            color: #ffca28;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .gcv-badge {
-            background: #ffca28;
-            color: #310d5a;
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            border: 2px solid white;
-        }
-
-        .menu-box {
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        /* الزر الرئيسي المحدث لفتح الأقسام */
-        .main-btn {
-            display: block;
-            background: #6d1eaf;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
             color: white;
-            text-decoration: none;
-            padding: 22px;
-            margin-bottom: 15px;
+        }
+        .header-banner {
+            background: linear-gradient(45deg, #4b0082, #ffd700);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .section-title {
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-bottom: 2px solid #ffd700;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px 20px;
+        }
+        .card {
+            background-color: #1e1e1e;
             border-radius: 20px;
-            font-size: 1.4em;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+        }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .price {
+            color: #ffd700;
+            font-size: 24px;
             font-weight: bold;
-            border: 2px solid #ffca28;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            margin: 15px 0;
         }
-
-        .main-btn:hover {
-            background: #ffca28;
-            color: #310d5a;
-            transform: scale(1.03);
+        .buy-btn {
+            background-color: #6a1b9a;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
         }
-
-        .secondary-btn {
-            display: block;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffca28;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 1.1em;
-            border: 1px solid rgba(255, 202, 40, 0.5);
-            transition: 0.3s;
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 202, 40, 0.2);
-        }
-
-        .footer {
-            margin-top: 40px;
-            font-size: 0.85em;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.6;
+        .buy-btn:hover {
+            background-color: #8e24aa;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>🇯🇴 سوق باي الأردن</h1>
-        <div class="gcv-badge">نعتمد سعر الإجماع GCV $314,159</div>
+    <header class="header-banner">
+        <h1>سوق باي الأردن 🇯🇴</h1>
+        <p>أول منصة أردنية متطورة للبيع والشراء باستخدام عملة Pi</p>
+    </header>
 
-        <div class="menu-box">
-            <a href="categories.html" class="main-btn">
-                🛍️ دخول المتجر والأقسام
-            </a>
-
-            <a href="instructions.html" class="secondary-btn">
-                📖 إرشادات المقايضة والقوانين
-            </a>
-        </div>
-
-        <div class="footer">
-            منصة مجهزة تقنياً لما بعد الشبكة المفتوحة (Open Mainnet) <br>
-            نعمل وفق رؤية مستقبلية لتمكين الرواد في الأردن © 2026
-        </div>
+    <div class="section-title">
+        <h2>معرض السيارات الكهربائية الفاخرة</h2>
     </div>
+    
+    <section class="container">
+        <div class="card">
+            <img src="images/car1.jpg" alt="Tesla Model S">
+            <div class="card-content">
+                <h3>Tesla Model S - 2026</h3>
+                <p class="price">Pi 1.500</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/car2.jpg" alt="Lucid Air">
+            <div class="card-content">
+                <h3>Lucid Air Pure</h3>
+                <p class="price">Pi 1.850</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/car3.jpg" alt="Mercedes EQS">
+            <div class="card-content">
+                <h3>Mercedes EQS Special</h3>
+                <p class="price">Pi 2.100</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <hr style="border: 0.5px solid #333; margin: 0 50px;">
+
+    <div class="section-title">
+        <h2>قسم الإلكترونيات والهواتف الذكية</h2>
+    </div>
+
+    <section class="container">
+        <div class="card">
+            <img src="images/iphone1.jpg" alt="iPhone 17 Pro Max">
+            <div class="card-content">
+                <h3>iPhone 17 Pro Max</h3>
+                <p class="price">Pi 0.0045</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/iphone2.jpg" alt="iPhone 17 Pro Gold">
+            <div class="card-content">
+                <h3>iPhone 17 Pro - Special Edition</h3>
+                <p class="price">Pi 0.0040</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/iphone3.jpg" alt="iPhone 17 Future">
+            <div class="card-content">
+                <h3>iPhone 17 Future Display</h3>
+                <p class="price">Pi 0.0042</p>
+                <button class="buy-btn">شراء الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: #666;">
+        <p>&copy; 2026 سوق باي الأردن - جميع الحقوق محفوظة</p>
+    </footer>
 
 </body>
 </html>
