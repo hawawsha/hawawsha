@@ -3,87 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عقارات للبيع | سوق باي الأردن</title>
+    <title>سوق هوواشة | العقارات</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .header {
-            padding: 30px;
-            background: linear-gradient(135deg, #007bff, #28a745); /* ألوان مختلفة للعقارات */
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 10px;
-        }
-        .card {
-            background-color: #2d2d2d;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #444;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #007bff; /* لون حدود مختلف */
-        }
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .card-content {
-            padding: 20px;
-        }
-        .price {
-            color: #28a745; /* لون سعر مختلف */
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .btn-buy {
-            background-color: #007bff; /* لون زر مختلف */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-        }
+        :root { --main: #1a1a1a; --accent: #27ae60; --bg: #fdfdfd; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        header { background: var(--main); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        .property-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .image-box { width: 100%; height: 400px; background: #f9f9f9; }
+        .image-box img { width: 100%; height: 100%; object-fit: cover; }
+        .details { padding: 30px; text-align: center; }
+        .price { color: #e67e22; font-weight: bold; font-size: 2em; display: block; margin: 15px 0; }
+        .btn-whatsapp { background: var(--accent); color: white; padding: 15px 40px; border-radius: 12px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 1.1em; transition: 0.3s; }
+        .btn-whatsapp:hover { opacity: 0.9; transform: scale(1.05); }
+        .back-link { display: block; margin-top: 20px; color: #666; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>عقارات ومقايضات</h1>
-        <p>استثمر في عقارك القادم بعملة Pi</p>
+<header>
+    <h1>قسم العقارات المتاحة</h1>
+</header>
+
+<div class="container">
+    <div class="property-card">
+        <div class="image-box">
+            <img src="images/land_plot.jpg" alt="أرض سكنية للبيع">
+        </div>
+        <div class="details">
+            <h2>أرض سكنية للبيع</h2>
+            <p>موقع استراتيجي، مساحة واسعة، واصلة جميع الخدمات.</p>
+            <span class="price">80,000 د.أ</span>
+            <a href="https://wa.me/962XXXXXXXXX" class="btn-whatsapp">تواصل لمعاينة الأرض الآن</a>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        </div>
     </div>
-
-    <div class="container">
-        <div class="card">
-            <img src="https://hawawsha.github.io/images/land_plot.jpg" alt="أرض سكنية للبيع">
-            <div class="card-content">
-                <h3>أرض سكنية مميزة</h3>
-                <p class="price">Pi 0.080</p>
-                <a href="#" class="btn-buy">تواصل معنا</a>
-            </div>
-        </div>
-
-        </div>
-
-    <br>
-    <a href="categories.html" style="color: #007bff; text-decoration: none;">← العودة للتصنيفات</a>
+</div>
 
 </body>
 </html>
