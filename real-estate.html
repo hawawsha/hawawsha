@@ -3,51 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قسم العقارات - الهواوشة</title>
+    <title>عقارات للبيع | سوق باي الأردن</title>
     <style>
-        :root { --main: #2c3e50; --accent: #27ae60; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        header { background: var(--main); color: white; padding: 30px; text-align: center; }
-        .back-btn { display: inline-block; margin: 20px; padding: 10px 20px; background: #eee; color: #333; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        .property-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; }
-        .property-img { flex: 1; min-width: 300px; }
-        .property-img img { width: 100%; height: 100%; object-fit: cover; }
-        .property-details { flex: 1; min-width: 300px; padding: 30px; }
-        .property-details h2 { color: var(--main); margin-top: 0; }
-        .price { font-size: 1.8em; color: var(--accent); font-weight: bold; display: block; margin: 20px 0; }
-        .specs { list-style: none; padding: 0; line-height: 2; }
-        .specs li { border-bottom: 1px solid #eee; padding: 5px 0; }
-        .contact-btn { display: block; text-align: center; background: var(--accent); color: white; padding: 15px; text-decoration: none; border-radius: 10px; font-weight: bold; margin-top: 20px; font-size: 1.2em; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            padding: 30px;
+            background: linear-gradient(135deg, #007bff, #28a745); /* ألوان مختلفة للعقارات */
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 10px;
+        }
+        .card {
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #444;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #007bff; /* لون حدود مختلف */
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .price {
+            color: #28a745; /* لون سعر مختلف */
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn-buy {
+            background-color: #007bff; /* لون زر مختلف */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>قسم العقارات والأراضي</h1>
-</header>
-
-<a href="index.html" class="back-btn">← العودة للرئيسية</a>
-
-<div class="container">
-    <div class="property-card">
-        <div class="property-img">
-            <img src="images/residential_land.jpg" alt="أرض سكنية">
-        </div>
-        <div class="property-details">
-            <h2>أرض سكنية مميزة للبيع</h2>
-            <p>أرض مستوية، واصلة جميع الخدمات (كهرباء، ماء، صرف صحي)، تقع في منطقة هادئة وراقية.</p>
-            <ul class="specs">
-                <li>📍 <strong>الموقع:</strong> منطقة الهواوشة</li>
-                <li>📏 <strong>المساحة:</strong> 500 متر مربع</li>
-                <li>🛣️ <strong>الشارع:</strong> واجهة 20 متر</li>
-                <li>📝 <strong>النوع:</strong> سكن أ</li>
-            </ul>
-            <span class="price">80,000 دينار</span>
-            <a href="https://wa.me/962XXXXXXXXX" class="contact-btn">تواصل عبر واتساب للمعاينة</a>
-        </div>
+    <div class="header">
+        <h1>عقارات ومقايضات</h1>
+        <p>استثمر في عقارك القادم بعملة Pi</p>
     </div>
-</div>
+
+    <div class="container">
+        <div class="card">
+            <img src="https://hawawsha.github.io/images/land_plot.jpg" alt="أرض سكنية للبيع">
+            <div class="card-content">
+                <h3>أرض سكنية مميزة</h3>
+                <p class="price">Pi 0.080</p>
+                <a href="#" class="btn-buy">تواصل معنا</a>
+            </div>
+        </div>
+
+        </div>
+
+    <br>
+    <a href="categories.html" style="color: #007bff; text-decoration: none;">← العودة للتصنيفات</a>
 
 </body>
 </html>
