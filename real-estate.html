@@ -6,24 +6,22 @@
     <title>عقارات الهواوشة - العرض الرسمي</title>
     <style>
         :root { --dark: #1a1a1a; --accent: #27ae60; --white: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
         header { background: var(--dark); color: white; padding: 15px; text-align: center; font-size: 1.1em; }
         
-        /* كرت العقار الاحترافي */
-        .property-container { max-width: 500px; margin: 30px auto; background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .property-container { max-width: 450px; margin: 30px auto; background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid #ddd; }
         
-        /* ضمان ظهور الصورة ووضوحها */
-        .image-frame { width: 100%; height: 300px; background: #eee; overflow: hidden; }
-        .image-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* إطار الصورة المعتمد على ملفك الداخلي */
+        .image-frame { width: 100%; height: auto; background: #eee; }
+        .image-frame img { width: 100%; height: auto; display: block; object-fit: contain; }
         
         .content { padding: 20px; text-align: center; }
         .price-tag { color: #e67e22; font-weight: bold; font-size: 1.6em; margin: 10px 0; display: block; }
         .btn-call { background: var(--accent); color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold; transition: 0.3s; }
-        .btn-call:hover { background: #219150; }
-        .home-link { display: block; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.85em; }
+        .home-link { display: block; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.8em; }
 
-        /* سلة المشتريات المصغرة جداً (طلبك) */
-        .cart-mini { position: fixed; bottom: 10px; left: 10px; background: var(--dark); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.7em; opacity: 0.8; }
+        /* سلة المشتريات المصغرة جداً (أنيقة وغير مزعجة) */
+        .cart-mini { position: fixed; bottom: 10px; left: 10px; background: var(--dark); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.7em; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -32,11 +30,11 @@
 
 <div class="property-container">
     <div class="image-frame">
-        <img src="images/land_plot.jpg" alt="صورة الأرض">
+        <img src="images/land.jpg" alt="أرض سكنية للهواوشة">
     </div>
     <div class="content">
         <h2>أرض سكنية للبيع</h2>
-        <p>موقع استراتيجي مميز - كامل الخدمات</p>
+        <p>موقع استراتيجي - منطقة هادئة - كامل الخدمات</p>
         <span class="price-tag">80,000 د.أ</span>
         <a href="https://wa.me/962XXXXXXXXX" class="btn-call">تواصل للمعاينة</a>
         <a href="index.html" class="home-link">← عودة للرئيسية</a>
