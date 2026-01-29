@@ -9,9 +9,8 @@
         .header { background: linear-gradient(45deg, #4b0082, #ffd700); padding: 40px; text-align: center; }
         .section-title { padding: 20px; background-color: #1a1a1a; border-bottom: 2px solid #ffd700; text-align: center; margin-top: 20px; }
         .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 30px; }
-        .card { background-color: #1e1e1e; border-radius: 20px; border: 2px solid #ffd700; overflow: hidden; text-align: center; transition: 0.3s; }
-        .card:hover { transform: scale(1.02); }
-        .card img { width: 100%; height: auto; display: block; }
+        .card { background-color: #1e1e1e; border-radius: 20px; border: 2px solid #ffd700; overflow: hidden; text-align: center; }
+        .card img { width: 100%; height: 250px; object-fit: cover; display: block; }
         .card-content { padding: 20px; }
         .price { color: #ffd700; font-size: 26px; font-weight: bold; margin: 15px 0; }
         .buy-btn { background-color: #6a1b9a; color: white; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; width: 85%; margin-bottom: 20px; font-weight: bold; }
@@ -24,56 +23,27 @@
         <p>المنصة المتطورة للبيع والشراء باستخدام عملة Pi</p>
     </header>
 
-    <div class="section-title">
-        <h2>معرض السيارات الكهربائية الفاخرة (9 موديلات)</h2>
-    </div>
+    <div class="section-title"><h2>معرض السيارات الكهربائية الفاخرة</h2></div>
     
     <section class="container">
-        <div class="card">
-            <img src="car1.jpg" alt="Tesla S">
-            <div class="card-content"><h3>Tesla Model S</h3><p class="price">Pi 0.350</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car2.jpg" alt="Tesla X">
-            <div class="card-content"><h3>Tesla Model X</h3><p class="price">Pi 0.382</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car3.jpg" alt="Lucid Air">
-            <div class="card-content"><h3>Lucid Air Dream</h3><p class="price">Pi 0.395</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car4.jpg" alt="Mercedes EQS">
-            <div class="card-content"><h3>Mercedes EQS</h3><p class="price">Pi 0.410</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car5.jpg" alt="BMW i7">
-            <div class="card-content"><h3>BMW i7 Electric</h3><p class="price">Pi 0.425</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car6.jpg" alt="Audi e-tron">
-            <div class="card-content"><h3>Audi e-tron GT</h3><p class="price">Pi 0.405</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car7.jpg" alt="Porsche Taycan">
-            <div class="card-content"><h3>Porsche Taycan</h3><p class="price">Pi 0.450</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car8.jpg" alt="Rivian R1S">
-            <div class="card-content"><h3>Rivian R1S SUV</h3><p class="price">Pi 0.375</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
-        <div class="card">
-            <img src="car9.jpg" alt="Ford Mustang Mach-E">
-            <div class="card-content"><h3>Mustang Mach-E</h3><p class="price">Pi 0.340</p><button class="buy-btn">شراء الآن</button></div>
-        </div>
+        <div class="card"><img src="images/tesla1.jpg" alt="Tesla"><div class="card-content"><h3>Tesla Model S</h3><p class="price">Pi 0.350</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/tesla2.jpg" alt="Tesla"><div class="card-content"><h3>Tesla Model X</h3><p class="price">Pi 0.382</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/tesla3.jpg" alt="Tesla"><div class="card-content"><h3>Tesla Roadster</h3><p class="price">Pi 0.450</p><button class="buy-btn">شراء الآن</button></div></div>
+
+        <div class="card"><img src="images/lucid1.jpg" alt="Lucid"><div class="card-content"><h3>Lucid Air Pure</h3><p class="price">Pi 0.395</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/lucid2.jpg" alt="Lucid"><div class="card-content"><h3>Lucid Air Touring</h3><p class="price">Pi 0.410</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/lucid3.jpg" alt="Lucid"><div class="card-content"><h3>Lucid Sapphire</h3><p class="price">Pi 0.520</p><button class="buy-btn">شراء الآن</button></div></div>
+
+        <div class="card"><img src="images/mercedes1.jpg" alt="Mercedes"><div class="card-content"><h3>Mercedes EQS</h3><p class="price">Pi 0.415</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/mercedes2.jpg" alt="Mercedes"><div class="card-content"><h3>Mercedes EQE</h3><p class="price">Pi 0.385</p><button class="buy-btn">شراء الآن</button></div></div>
+        <div class="card"><img src="images/mercedes3.jpg" alt="Mercedes"><div class="card-content"><h3>Mercedes SUV Electric</h3><p class="price">Pi 0.430</p><button class="buy-btn">شراء الآن</button></div></div>
     </section>
 
-    <div class="section-title">
-        <h2>قسم الإلكترونيات الحديثة</h2>
-    </div>
+    <div class="section-title"><h2>قسم الإلكترونيات الحديثة</h2></div>
 
     <section class="container">
         <div class="card">
-            <img src="iphone1.jpg" alt="iPhone 17 Pro Max">
+            <img src="images/iphone1.jpg" alt="iPhone 17">
             <div class="card-content">
                 <h3>iPhone 17 Pro Max</h3>
                 <p class="price">Pi 0.0038</p>
@@ -82,9 +52,8 @@
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 40px; color: #666; background-color: #1a1a1a;">
-        <p>&copy; 2026 جميع الحقوق محفوظة لـ "سوق باي الأردن"</p>
-        <p style="color: #ffd700;">نحن نجهز الكود البرمجي بانتظار الشبكة المفتوحة</p>
+    <footer style="text-align: center; padding: 40px; color: #666;">
+        <p>&copy; 2026 سوق باي الأردن</p>
     </footer>
 
 </body>
