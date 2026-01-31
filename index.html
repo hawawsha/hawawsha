@@ -1,76 +1,59 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوق هوواشة - v2</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <style>
-        :root { --main: #1a1a1a; --accent: #e67e22; --bg: #fdfdfd; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; text-align: center; }
-        header { background: var(--main); color: white; padding: 25px; border-bottom: 4px solid var(--accent); }
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 30px; }
-        .card { background: white; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 280px; padding: 20px; border: 1px solid #eee; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .price { color: var(--accent); font-weight: bold; font-size: 1.5em; display: block; margin: 15px 0; }
-        .btn { background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; font-size: 1.1em; }
-        #status { background: #fff3e0; color: #e67e22; padding: 10px; font-weight: bold; display: block; margin-bottom: 10px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوق هوواشة - الدفع التجريبي</title>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f4; }
+    .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+    button { background: #27ae60; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1.2em; font-weight: bold; width: 100%; }
+    #status { margin-top: 20px; color: #e67e22; font-weight: bold; }
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>سوق هوواشة التجاري v2</h1>
-</header>
-
-<div id="status">جاهز للربط مع المحفظة.. يرجى التجربة</div>
-
-<div class="container">
-    <div class="card">
-        <h3>مكيف هواء ميديا</h3>
-        <span class="price">0.01 Pi</span>
-        <button class="btn" onclick="onBuy(0.01, 'مكيف ميديا')">شراء تجريبي</button>
-    </div>
-    <div class="card">
-        <h3>ماكينة قهوة احترافية</h3>
-        <span class="price">0.01 Pi</span>
-        <button class="btn" onclick="onBuy(0.01, 'ماكينة قهوة')">شراء تجريبي</button>
-    </div>
+<div class="card">
+  <h2>سوق هوواشة v2</h2>
+  <p>اضغط للبدء في الـ 10 عمليات المطلوبة</p>
+  <button id="payBtn">ادفع 1 Pi (تجريبي)</button>
+  <div id="status">جاهز..</div>
 </div>
 
 <script>
-    // تهيئة التطبيق باستخدام المفتاح الذي أرسلته
-    const Pi = window.Pi;
-    Pi.init({ version: "2.0", sandbox: true });
+  // تهيئة Pi SDK
+  Pi.init({ version: "2.0", sandbox: true });
 
-    async function onBuy(amount, itemName) {
-        try {
-            document.getElementById('status').innerText = "جاري فتح محفظة Pi...";
-            
-            const payment = await Pi.createPayment({
-                amount: amount,
-                memo: "شراء تجريبي: " + itemName,
-                metadata: { item: itemName }
-            }, {
-                onReadyForServerApproval: (paymentId) => {
-                    console.log("تم التجهيز:", paymentId);
-                },
-                onReadyForServerCompletion: (paymentId, txid) => {
-                    document.getElementById('status').innerText = "✅ تمت العملية بنجاح!";
-                    alert("مبروك! تمت أول عملية تجريبية بنجاح.\nرقم المعاملة: " + txid);
-                },
-                onCancel: (paymentId) => {
-                    document.getElementById('status').innerText = "❌ تم إلغاء العملية";
-                },
-                onError: (error, payment) => {
-                    document.getElementById('status').innerText = "⚠️ خطأ: " + error.message;
-                }
-            });
-        } catch (err) {
-            document.getElementById('status').innerText = "تأكد من فتح الموقع داخل Pi Browser";
-            console.error(err);
-        }
+  document.getElementById("payBtn").onclick = async () => {
+    const statusDiv = document.getElementById("status");
+    try {
+      statusDiv.innerText = "جاري فتح المحفظة...";
+      
+      const payment = await Pi.createPayment({
+        amount: 1,
+        memo: "Sandbox Test Payment"
+      }, {
+        onReadyForServerApproval: async (paymentId) => {
+          statusDiv.innerText = "جاري التأكيد من السيرفر...";
+          // استدعاء ملف صديقك في مجلد api
+          await fetch("/api/approve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentId })
+          });
+        },
+        onReadyForServerCompletion: (paymentId, txid) => {
+          statusDiv.innerText = "✅ تمت العملية بنجاح!";
+          alert("تم الدفع! رقم العملية: " + txid);
+        },
+        onCancel: (paymentId) => { statusDiv.innerText = "❌ تم إلغاء العملية"; },
+        onError: (error) => { statusDiv.innerText = "⚠️ خطأ في الدفع"; }
+      });
+    } catch (err) {
+      alert("افتح الموقع من متصفح Pi Browser فقط");
     }
+  };
 </script>
 
 </body>
