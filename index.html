@@ -3,104 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة الاستوديو - Pi Network</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <title>سوق هوواشة - النسخة الاحترافية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; color: #333; }
-        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: inline-block; max-width: 90%; }
-        h2 { color: #673ab7; }
-        button { background-color: #673ab7; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; transition: 0.3s; width: 100%; }
-        button:hover { background-color: #512da8; }
-        #status { margin-top: 20px; padding: 10px; border-radius: 5px; background: #eeeeee; font-size: 14px; min-height: 40px; }
-        .info { font-size: 12px; color: #777; margin-top: 15px; }
+        :root { --main: #1a1a1a; --accent: #e67e22; --bg: #fdfdfd; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; }
+        
+        header { background: var(--main); color: white; padding: 25px; text-align: center; }
+        
+        nav { background: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .nav-link { color: var(--main); text-decoration: none; margin: 0 6px; font-weight: bold; cursor: pointer; padding: 10px 18px; border-radius: 25px; display: inline-block; transition: 0.3s; border: 1px solid #eee; font-size: 0.9em; }
+        .nav-link.active { background: var(--main); color: white; border-color: var(--main); }
+
+        .section { display: none; padding: 30px 15px; max-width: 1200px; margin: auto; }
+        .section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        
+        .card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); transition: 0.4s; border: 1px solid #f0f0f0; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 220px; object-fit: contain; padding: 15px; box-sizing: border-box; }
+        .card-info { padding: 15px; text-align: center; }
+        .price { color: var(--accent); font-weight: bold; font-size: 1.3em; display: block; margin-bottom: 12px; }
+        
+        .btn { background: #f8f8f8; color: var(--main); border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.2s; border: 1px solid #eee; }
+        .btn:hover { background: var(--main); color: white; }
+
+        /* سلة مصغرة وأنيقة */
+        .cart-mini { position: fixed; bottom: 20px; left: 20px; background: var(--main); color: white; padding: 10px 20px; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>واجهة التحكم في الاستوديو</h2>
-    <p>مرحباً بك في الواجهة الخلفية لتطبيقك الأصلي.</p>
-    
-    <button id="pay-button" onclick="handlePayment()">إرسال دفع تجريبي (1 Pi)</button>
-    
-    <div id="status">جاري تهيئة النظام...</div>
-    
-    <div class="info">
-        المحفظة المرتبطة: <br>
-        <small>GDNG3CFO...EUKM</small>
+<header>
+    <h1>سوق هوواشة التجاري</h1>
+</header>
+
+<nav>
+    <div class="nav-link active" onclick="showSection('appliances', this)">الأجهزة (10)</div>
+    <div class="nav-link" onclick="showSection('cars', this)">السيارات</div>
+    <div class="nav-link" onclick="showSection('phones', this)">الهواتف</div>
+    <div class="nav-link" onclick="showSection('realestate', this)">العقارات</div>
+</nav>
+
+<div id="appliances" class="section active">
+    <div class="container">
+        <div class="card"><img src="images/air_conditioner.jpg"><div class="card-info"><h3>مكيف هواء</h3><span class="price">450 د.أ</span><button class="btn" onclick="add(450)">إضافة</button></div></div>
+        <div class="card"><img src="images/coffee_machine.jpg"><div class="card-info"><h3>ماكينة قهوة</h3><span class="price">180 د.أ</span><button class="btn" onclick="add(180)">إضافة</button></div></div>
+        <div class="card"><img src="images/dishwasher.jpg"><div class="card-info"><h3>غسالة أطباق</h3><span class="price">520 د.أ</span><button class="btn" onclick="add(520)">إضافة</button></div></div>
+        <div class="card"><img src="images/robot_vacuum.jpg"><div class="card-info"><h3>مكنسة روبوت</h3><span class="price">210 د.أ</span><button class="btn" onclick="add(210)">إضافة</button></div></div>
+        <div class="card"><img src="images/microwave_oven.jpg"><div class="card-info"><h3>ميكروويف</h3><span class="price">95 د.أ</span><button class="btn" onclick="add(95)">إضافة</button></div></div>
+        <div class="card"><img src="images/blender.jpg"><div class="card-info"><h3>خلاط فواكه</h3><span class="price">65 د.أ</span><button class="btn" onclick="add(65)">إضافة</button></div></div>
+        <div class="card"><img src="images/stand_mixer.jpg"><div class="card-info"><h3>عجانة كهربائية</h3><span class="price">140 د.أ</span><button class="btn" onclick="add(140)">إضافة</button></div></div>
+        <div class="card"><img src="images/electric_oven.jpg"><div class="card-info"><h3>فرن كهربائي</h3><span class="price">320 د.أ</span><button class="btn" onclick="add(320)">إضافة</button></div></div>
+        <div class="card"><img src="images/air_conditioner.jpg"><div class="card-info"><h3>مكيف سبليت</h3><span class="price">480 د.أ</span><button class="btn" onclick="add(480)">إضافة</button></div></div>
+        <div class="card"><img src="images/robot_vacuum.jpg"><div class="card-info"><h3>روبوت مطور</h3><span class="price">250 د.أ</span><button class="btn" onclick="add(250)">إضافة</button></div></div>
     </div>
 </div>
 
+<div id="cars" class="section">
+    <div class="container">
+        <div class="card"><img src="images/tesla1.jpg"><div class="card-info"><h3>Tesla Model S</h3><span class="price">60,000 د.أ</span><button class="btn">عرض</button></div></div>
+        <div class="card"><img src="images/lucid1.jpg"><div class="card-info"><h3>Lucid Air</h3><span class="price">65,000 د.أ</span><button class="btn">عرض</button></div></div>
+        <div class="card"><img src="images/mercedes1.jpg"><div class="card-info"><h3>Mercedes EQS</h3><span class="price">75,000 د.أ</span><button class="btn">عرض</button></div></div>
+    </div>
+</div>
+
+<div id="realestate" class="section">
+    <div class="container" style="justify-content: center; display: flex;">
+        <div class="card" style="max-width: 400px;">
+            <img src="images/land.jpg" onerror="this.src='https://placehold.co/400x300?text=ارض+سكنية'">
+            <div class="card-info">
+                <h3>أرض سكنية للبيع</h3>
+                <span class="price">80,000 د.أ</span>
+                <button class="btn" style="background: #27ae60; color: white;">تواصل معنا</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-mini">🛒 السلة: <span id="val">0</span> د.أ</div>
+
 <script>
-    const Pi = window.Pi;
-    const statusDiv = document.getElementById('status');
-
-    // 1. تهيئة الـ SDK بمفتاح الـ API الجديد الخاص بـ Hawawsheh
-    Pi.init({ 
-        version: "2.0", 
-        sandbox: true // تأكد من جعلها false عند الانتقال للمين نت لاحقاً
-    });
-
-    // 2. معالجة المدفوعات غير المكتملة (أهم جزء لتجنب رسالة الفشل)
-    async function onIncompletePaymentFound(payment) {
-        console.log("وجدنا عملية معلقة:", payment.identifier);
-        statusDiv.innerText = "هناك عملية سابقة معلقة، يتم معالجتها...";
-        // هنا يجب عادةً إخبار خادمك لإكمال العملية، للتبسيط سنقوم بعرض رسالة
-        // في الوضع الاحترافي، ترسل payment.identifier لخادمك
-    };
-
-    // 3. استدعاء تسجيل الدخول عند فتح الصفحة
-    async function auth() {
-        try {
-            const scopes = ['payments', 'username'];
-            const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-            statusDiv.innerText = "متصل بنجاح كـ: " + auth.user.username;
-            console.log("Logged in as:", auth.user.username);
-        } catch (err) {
-            console.error(err);
-            statusDiv.innerText = "خطأ في تسجيل الدخول: " + err.message;
-        }
+    function showSection(id, el) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
     }
 
-    // تشغيل تسجيل الدخول فور تحميل الصفحة
-    auth();
-
-    // 4. دالة الدفع الرئيسية (Pi.createPayment)
-    async function handlePayment() {
-        const platformWalletAddress = "GDNG3CFOI34QTC27W7IJV7D2FRSK5XOJXGVBAN3BDCTYSHAYCCK5EUKM";
-
-        try {
-            statusDiv.innerText = "جاري الاتصال بالمحفظة...";
-
-            const payment = await Pi.createPayment({
-                amount: 1,
-                memo: "دفع تجريبي لـ Hawawsheh Studio",
-                metadata: { orderId: "order_" + Date.now() },
-            }, {
-                onReadyForServerApproval: (paymentId) => {
-                    console.log("جاهز لموافقة الخادم، ID:", paymentId);
-                    statusDiv.innerText = "جاري الحصول على موافقة الشبكة...";
-                    // ملاحظة: في تطبيق حقيقي، هنا ترسل paymentId لخادمك الخاص
-                },
-                onReadyForServerCompletion: (paymentId, txid) => {
-                    console.log("تمت المعاملة بنجاح، TXID:", txid);
-                    statusDiv.innerText = "✅ تمت العملية بنجاح! رقم المعاملة: " + txid;
-                    alert("نجحت المعاملة! شكراً لك.");
-                },
-                onCancel: (paymentId) => {
-                    statusDiv.innerText = "❌ تم إلغاء العملية من قبل المستخدم.";
-                },
-                onError: (error, payment) => {
-                    console.error("خطأ في الدفع:", error);
-                    statusDiv.innerText = "❌ حدث خطأ: " + error.message;
-                },
-            });
-        } catch (err) {
-            console.error("فشل بدء الدفع:", err);
-            statusDiv.innerText = "❌ فشل في بدء عملية الدفع: " + err.message;
-        }
+    let t = 0;
+    function add(p) {
+        t += p;
+        document.getElementById('val').innerText = t;
     }
 </script>
 
 </body>
 </html>
+
