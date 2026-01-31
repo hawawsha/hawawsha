@@ -16,8 +16,8 @@
 
 <div class="card">
   <h2>سوق هوواشة v2</h2>
-  <p>اضغط للبدء في الـ 10 عمليات المطلوبة</p>
-  <button id="payBtn">ادفع 1 Pi (تجريبي)</button>
+  <p>اضغط للبدء في عملية الدفع التجريبي</p>
+  <button id="payBtn">ادفع 1 Pi (Sandbox Test)</button>
   <div id="status">جاهز..</div>
 </div>
 
@@ -36,22 +36,19 @@
       }, {
         onReadyForServerApproval: async (paymentId) => {
           statusDiv.innerText = "جاري التأكيد من السيرفر...";
-          // استدعاء ملف صديقك في مجلد api
-          await fetch("/api/approve", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ paymentId })
-          });
+          // لاحقًا سنربط approve endpoint إذا كان موجود
+          console.log("Payment ID جاهز:", paymentId);
         },
         onReadyForServerCompletion: (paymentId, txid) => {
           statusDiv.innerText = "✅ تمت العملية بنجاح!";
-          alert("تم الدفع! رقم العملية: " + txid);
+          alert("تم الدفع التجريبي! رقم العملية: " + txid);
         },
         onCancel: (paymentId) => { statusDiv.innerText = "❌ تم إلغاء العملية"; },
-        onError: (error) => { statusDiv.innerText = "⚠️ خطأ في الدفع"; }
+        onError: (error) => { statusDiv.innerText = "⚠️ خطأ في الدفع: " + error.message; }
       });
     } catch (err) {
-      alert("افتح الموقع من متصفح Pi Browser فقط");
+      alert("افتح الموقع من Pi Browser فقط");
+      console.error(err);
     }
   };
 </script>
